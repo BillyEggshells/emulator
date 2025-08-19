@@ -87,10 +87,19 @@
                 width: 130px;
                 height: 130px;
                 filter: drop-shadow(0 0 10px white);
+                cursor: pointer;
             }
 
             #top {
                 margin: 5px;
+            }
+
+            #logo-message {
+                display: none;
+                font-size: 2em;
+                color: red;
+                text-shadow: 0 0 10px yellow;
+                margin-top: 20px;
             }
         </style>
     </head>
@@ -98,10 +107,11 @@
     <body>
         <div id="top">
             <h1> </h1>
-            <img src="LogoLight.png" alt="Logo" class="logo">
-        <h1 id="heater-msg" style="color: orange; text-shadow: 0 0 10px red;">I HAVE A RADIATOR!!!!</h1>
+            <img src="LogoLight.png" alt="Logo" class="logo" id="logo">
+            <h1 id="heater-msg" style="color: orange; text-shadow: 0 0 10px red;">I HAVE A RADIATOR!!!!</h1>
             <img src="CornerIMG.png" alt="Corner Image"
-     style="position: fixed; top: 0px; left: 0px; width: 100px; height: auto; z-index: 9999; filter: drop-shadow(0 0 75px green); transform: rotate(90deg);">
+                style="position: fixed; top: 0px; left: 0px; width: 100px; height: auto; z-index: 9999; filter: drop-shadow(0 0 75px green); transform: rotate(90deg);">
+            <div id="logo-message">NOOOOOOOOOOOO!!!!!11!!!!!</div>
         </div>
         <div id = box>
             <input type = file id = input>
@@ -256,6 +266,24 @@
             }
             box.ondragover = () => box.setAttribute("drag", true);
             box.ondragleave = () => box.removeAttribute("drag");
+
+            // --- NEW LOGO LOGIC ---
+            const logo = document.getElementById("logo");
+            const msg = document.getElementById("logo-message");
+
+            // Break if LogoLight.png is missing
+            logo.onerror = function () {
+                throw new Error("LogoLight.png is missing! Breaking the page...");
+            };
+
+            // When logo clicked
+            logo.onclick = function () {
+                logo.style.display = "none";   // hide logo
+                msg.style.display = "block";   // show NOOOOO
+                setTimeout(() => {
+                    throw new Error("Page broken because the logo was destroyed! 💥");
+                }, 1000);
+            };
         </script>
     </body>
 </html>
